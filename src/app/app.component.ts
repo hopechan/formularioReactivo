@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 //import para corregir error en consola
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,14 +22,20 @@ export class AppComponent implements OnInit{
 
   crearForm(){
     this.reactiveForm = this.fb.group({
-      //se declaran los name que tienen los input en el formulario
-      txtNombre : [''],
-      txtEmail : [''],
-      txtPassword : ['']
+      txtNombre : ['', Validators.required],
+      //Para usar multiples validaciones se utiliza la funcion compose 
+      txtEmail : ['', Validators.compose([Validators.required, Validators.email])],
+      //se verifica que la contraseña tenga al menos 8 caracteres
+      txtPassword : ['', Validators.compose([Validators.required, Validators.minLength(8)])]
     });
   }
 
   onSubmit(){
     console.log("Has accionado un evento", this.reactiveForm.value);
   }
+
+  get nombre(){return this.reactiveForm.get('txtNombre');}
+  get email(){return this.reactiveForm.get('txtEmail');}
+  get password(){return this.reactiveForm.get('txtPassword');}
+
 }

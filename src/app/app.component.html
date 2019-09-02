@@ -1,12 +1,46 @@
-<form [formGroup] = "reactiveForm" (ngSubmit) = "onSubmit()">
-  <label class="">Nombre</label>
-  <input class="" type="text" formControlName="txtNombre">
-
-  <label class="">Email</label>
-  <input class="" type="email" formControlName="txtEmail">
-
-  <label class="">Contraseña</label>
-  <input class="" type="password" formControlName="txtPassword">
-
-  <button type="submit">Submit</button>
-</form>
+<nav>
+  <div class="nav-wrapper green">
+    <a href="#" class="brand-logo">Formulario reactivo</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <h3>Formulario</h3>
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+          <div class="row">
+            <form [formGroup] = "reactiveForm" (ngSubmit) = "onSubmit()" class="col s12 m12">
+              <div class="row">
+                <div class="input-field col s6 m12">
+                  <label>Nombre</label>
+                  <input class="validate" type="text" formControlName="txtNombre">
+                    <p *ngIf="reactiveForm.get('txtNombre').hasError('required')" class="helper-text" data-error="wrong" data-succes="right">*Un nombre es requerido</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6 m12">
+                  <label >Email</label>
+                  <input class="validate" type="email" formControlName="txtEmail">
+                  <div *ngIf="reactiveForm.controls.txtEmail.hasError('required')" class="helper-text" data-error="wrong" data-succes="right">
+                    <p>*Un email correcto es requerido</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6 m6">
+                  <label>Contraseña</label>
+                  <input class="validate" type="password" formControlName="txtPassword">
+                  <div *ngIf="reactiveForm.controls.txtPassword.hasError('required')" class="helper-text" data-error="wrong" data-succes="right">
+                    <p>*Ingrese una contraseña</p>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" [disabled] ="!reactiveForm.valid" class="btn green">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>      
+</div>
